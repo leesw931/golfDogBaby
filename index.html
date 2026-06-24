@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>골프 토글</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f6fa;
+      padding: 40px;
+    }
+
+    .box {
+      width: 320px;
+      padding: 20px;
+      border-radius: 16px;
+      background: white;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    }
+
+    .row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+      font-size: 18px;
+    }
+
+    .row:last-child {
+      margin-bottom: 0;
+    }
+
+    .toggle {
+      width: 58px;
+      height: 32px;
+      border: none;
+      border-radius: 999px;
+      padding: 3px;
+      cursor: pointer;
+      background: #cfd4dc;
+    }
+
+    .toggle span {
+      display: block;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: white;
+      transition: transform 0.2s;
+    }
+
+    .toggle.on {
+      background: #2f80ed;
+    }
+
+    .toggle.on span {
+      transform: translateX(26px);
+    }
+
+    .result {
+      margin-top: 24px;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+
+<body>
+  <h2>골프 항목 선택</h2>
+
+  <div class="box">
+    <div class="row">
+      <span>드라이버</span>
+      <button class="toggle on" onclick="toggleItem('driver')" id="driver">
+        <span></span>
+      </button>
+    </div>
+
+    <div class="row">
+      <span>아이언</span>
+      <button class="toggle" onclick="toggleItem('iron')" id="iron">
+        <span></span>
+      </button>
+    </div>
+
+    <div class="row">
+      <span>퍼팅</span>
+      <button class="toggle" onclick="toggleItem('putting')" id="putting">
+        <span></span>
+      </button>
+    </div>
+  </div>
+
+  <div class="result" id="result"></div>
+
+  <script>
+    const state = {
+      driver: true,
+      iron: false,
+      putting: false
+    };
+
+    function toggleItem(key) {
+      const nextValue = !state[key];
+
+      Object.keys(state).forEach(item => {
+        state[item] = item === key ? nextValue : !nextValue;
+      });
+
+      render();
+    }
+
+    function render() {
+      Object.keys(state).forEach(key => {
+        document.getElementById(key).classList.toggle("on", state[key]);
+      });
+
+      document.getElementById("result").innerHTML =
+        `현재 상태:<br>
+        드라이버 ${state.driver ? "ON" : "OFF"} /
+        아이언 ${state.iron ? "ON" : "OFF"} /
+        퍼팅 ${state.putting ? "ON" : "OFF"}`;
+    }
+
+    render();
+  </script>
+</body>
+</html>
